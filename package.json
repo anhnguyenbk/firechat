@@ -1,0 +1,29 @@
+{
+  "name": "firechat",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anhnguyenbk/firechat.git"
+  },
+  "author": "Anh Nguyen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/anhnguyenbk/firechat/issues"
+  },
+  "homepage": "https://github.com/anhnguyenbk/firechat#readme",
+  "dependencies": {
+    "firebase": "^8.6.7",
+    "firebase-app": "0.0.1",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "html-loader": "^2.1.2",
+    "webpack": "^5.38.1",
+    "webpack-cli": "^4.7.2"
+  }
+}
