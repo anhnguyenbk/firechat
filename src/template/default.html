@@ -1,37 +1,19 @@
-<div class="firechat">
-    <div class="col-md-6 col-md-offset-3">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <i class="glyphicon glyphicon-user"></i>
-                        <h6 class="panel-title">ChatBox</h6>
-                        <div class="btn-group btn-group-xs pull-right">
-                            Hello, <span id="txtName"></span>
-                        </div>
-                    </div>
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-sm-12" id="messageContainerScrollDiv">
-                                <table class="table table-hover">
-                                    <tr></tr>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel-footer">
-                        <form>
-                            <div class="input-group input-group-sm">
-                                <span class="input-group-addon">
-                                    <i class="glyphicon glyphicon-pencil"></i>
-                                </span>
-                                <input type="text" class="form-control" id="txtText"
-                                    placeholder="Type your message here ..">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-primary" type="submit" id="btnSend">Send</button>
-                                </span>
-                            </div>
-                        </form>
+<div class="row justify-content-center firechat-wrapper">
+    <div class="col-md-12 col-xl-12 chat">
+        <div class="card">
+            <div class="card-header">
+                Chatbox
+            </div>
+            <div class="card-body msg_card_body" id="messageContainerScrollDiv" data-mcs-theme="dark">
+                <div id="messageContainer"></div>
+            </div>
+            <div class="card-footer">
+                <div class="input-group">
+                    <textarea id="firechat-input" name="" class="form-control type_msg"
+                              placeholder="Nhập tin nhắn.."></textarea>
+                    <div class="input-group-append">
+                            <span id="btnFireChatSend" type="submit" class="input-group-text send_btn"><i
+                                    class="fas fa-location-arrow"></i></span>
                     </div>
                 </div>
             </div>

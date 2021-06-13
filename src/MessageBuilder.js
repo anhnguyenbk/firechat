@@ -1,7 +1,10 @@
-class MessageBuilder {
-    constructor() {}
+import moment from 'moment';
 
-    timeSince (date) {
+class MessageBuilder {
+    constructor() {
+    }
+
+    timeSince(date) {
 
         var seconds = Math.floor((new Date() - date) / 1000);
 
@@ -39,7 +42,7 @@ class MessageBuilder {
         return this;
     }
 
-    at (_at) {
+    at(_at) {
         this._at = _at;
         return this;
     }
@@ -51,24 +54,30 @@ class MessageBuilder {
 
     build() {
         if (this._isStart) {
-            return '<div class="d-flex justify-content-start mb-4">' +
-                '<div class="msg_user">' + this._user + '</div>' +
-                // '<div class="img_cont_msg">'+ 
-                // '<span class="rounded-circle user_img_msg">' +  + '</span>' +
-                // '</div>' +
-                '<div class="msg_cotainer">' + this.msg +
-                '<span class="msg_time">' + this.timeSince(new Date(this._at)) + '</span>' +
-                '</div>' +
-                '</div>'
+            return '<div class="relative-wapper">' +
+                        '<div class="d-flex justify-content-end mb-4">' +
+                            '<div class="msg_content right">' + this.msg +
+                            '</div>' +
+                        '</div>' +
+                        this.buildTimeSend() +
+                    '</div>'
         } else {
-            return '<div class="d-flex justify-content-end mb-4">' +
-                '<div class="msg_cotainer_send">' + this.msg +
-                '<span class="msg_time_send">9:10 AM, Today</span>' +
-                '</div>' +
-                '<div class="img_cont_msg">' +
-                '</div>' +
-                '</div>'
+            return '<div class="relative-wapper">' +
+                        '<div class="d-flex justify-content-start mb-4">' +
+                            '<div class="msg_content left">' + this.msg + '</div>' +
+                        '</div>' +
+                        this.buildTimeSend() +
+                    '</div>'
+        }
+    }
+
+    buildTimeSend() {
+        if (this._isStart) {
+            return '<span class="msg_time_send right"><span class="bold">' + this._user + "</span>  " + moment(this._at).format('LT') + '</span>'
+        } else {
+            return '<span class="msg_time_send left"><span class="bold">' + this._user + "</span>  " + moment(this._at).format('LT') + '</span>'
         }
     }
 }
+
 export default MessageBuilder;

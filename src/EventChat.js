@@ -7,10 +7,11 @@ class EventChat {
     }
 
     push (msg) {
-        this.database.ref(this.eventKey + "/" + uuidv4()).set({
+        const time =  (new Date()).getTime();
+        this.database.ref(this.eventKey + "/" + time + "_" + uuidv4()).set({
             user: msg.user,
             text: msg.text,
-            at: (new Date()).getTime(),
+            at: time,
         });
     }
 }

@@ -2,6 +2,7 @@ import html from './template/default.html';
 import './template/style.css';
 import EventChat from "./EventChat";
 import MessageBuilder from './MessageBuilder';
+import ScrollUtils from "./utils/ScrollUtils";
 import firebase from "firebase/app";
 import "firebase/database";
 
@@ -20,8 +21,13 @@ function firechat(parentElement, _config) {
     }
 
     firebase.initializeApp(_config.firebaseConfig);
-    // Get the Database service for the default app
     $(parentElement).html(html);
+
+    const scrollElement = $('#messageContainerScrollDiv');
+    ScrollUtils.initScroll(scrollElement);
+    // Initial scroll to end
+    setTimeout(() => ScrollUtils.scrollToEnd(scrollElement), 2000);
+
     $(document).ready(handleEvents);
 }
 
@@ -35,9 +41,10 @@ function handleEvents() {
     $("#firechat-input").keypress(function (e) {
         var code = (e.keyCode ? e.keyCode : e.which);
         //alert(code);
-        if (code == 13) {
+        if (code === 13) {
+            e.preventDefault();
             $("#btnFireChatSend").trigger('click');
-            return true;
+            return false;
         }
     });
 
@@ -46,14 +53,14 @@ function handleEvents() {
         var text = $('#firechat-input').val();
         if (text) {
             eventChat.push({user: user, text: text})
-            $('#firechat-input').val('');
+            $('#firechat-input').val("");
         }
     });
 
     // Attach an asynchronous callback to read the data at our posts reference
     var eventRef = database.ref(eventKey);
     eventRef.on('child_added', (snapshot) => {
-        console.log(snapshot.val());
+        // console.log(snapshot.val());
         var message = snapshot.val();
 
         const messageBuilder = new MessageBuilder();
@@ -61,20 +68,16 @@ function handleEvents() {
                             .message(message.text)
                             .user(message.user)
                             .at (message.at)
-                            .isStart(true)
+                            .isStart(user === message.user)
                             .build();
-        console.log (html);
 
-        // var html =
-        //     '<tr>' +
-        //     '<td><i class="glyphicon glyphicon-user"></i> ' + message.user + ': </td>' +
-        //     '<td>' + message.text + '</td>' +
-        //     '</tr>';
         $('#messageContainer').append(html);
-        // $('#messageContainerScrollDiv').animate({
-        //     scrollTop: $('#messageContainerScrollDiv')[0].scrollHeight
-        // }, 0);
 
+        const scrollElement = $('#messageContainerScrollDiv');
+        if (ScrollUtils.endReached(scrollElement)) {
+            console.log ("end reached");
+            ScrollUtils.scrollToEnd(scrollElement);
+        }
     }, (errorObject) => {
         console.log('The read failed: ' + errorObject.name);
     });
